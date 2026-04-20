@@ -1,0 +1,23 @@
+echo -n 12345 > f1.txt
+echo -n 1234567890 > f2.txt
+echo -n 1234567890abcdef > f3.txt
+
+ls -l f*.txt
+
+openssl enc -aes-128-cbc -e -in f1.txt -out f1.bin -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+openssl enc -aes-128-cbc -d -in f1.bin -out f1_dec.txt -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+openssl enc -aes-128-cbc -d -in f1.bin -out f1_nopad.txt -nopad -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+xxd f1_dec.txt
+xxd f1_nopad.txt
+
+openssl enc -aes-128-cbc -e -in f2.txt -out f2.bin -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+openssl enc -aes-128-cbc -d -in f2.bin -out f2_dec.txt -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+openssl enc -aes-128-cbc -d -in f2.bin -out f2_nopad.txt -nopad -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+xxd f2_dec.txt
+xxd f2_nopad.txt
+
+openssl enc -aes-128-cbc -e -in f3.txt -out f3.bin -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+openssl enc -aes-128-cbc -d -in f3.bin -out f3_dec.txt -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+openssl enc -aes-128-cbc -d -in f3.bin -out f3_nopad.txt -nopad -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+xxd f3_dec.txt
+xxd f3_nopad.txt

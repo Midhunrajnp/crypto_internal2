@@ -1,0 +1,41 @@
+part a:error propagation
+                                                                                                                                                                                                                   touch plain.txt
+gedit plain.txt
+
+openssl enc -aes-128-ecb -e -in plain.txt -out cipher_ecb.bin -K 0123456789abcdeffedcba9876543210
+
+ghex cipher_ecb.bin
+
+openssl enc -aes-128-ecb -d -in cipher_ecb.bin -out op_ecb.txt -K 0123456789abcdeffedcba9876543210
+
+openssl enc -aes-128-cbc -e -in plain.txt -out cipher_cbc.bin -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+
+ghex cipher_cbc.bin
+
+openssl enc -aes-128-cbc -d -in cipher_cbc.bin -out op_cbc.txt -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+
+cat op_ecb.txt
+cat op_cbc.txt
+
+part b : initialisation vector 
+
+echo "THIS IS SAMPLE DATA FOR AES IV TEST" > abc.txt
+
+openssl enc -aes-128-cbc -e -in abc.txt -out cipher_iv1.bin -K 00112233445566778899AABBCCDDEEFF -iv 0102030405060708090A0B0C0D0E0F10
+xxd cipher_iv1.bin
+
+openssl enc -aes-128-cbc -e -in abc.txt -out cipher_iv2.bin -K 00112233445566778899AABBCCDDEEFF -iv 1112131415161718191A1B1C1D1E1F20
+xxd cipher_iv2.bin
+
+openssl enc -aes-128-cbc -e -in abc.txt -out cipher_same1.bin -K 00112233445566778899AABBCCDDEEFF -iv 0102030405060708090A0B0C0D0E0F10
+xxd cipher_same1.bin
+
+openssl enc -aes-128-cbc -e -in abc.txt -out cipher_same2.bin -K 00112233445566778899AABBCCDDEEFF -iv 0102030405060708090A0B0C0D0E0F10
+xxd cipher_same2.bin
+
+openssl enc -aes-128-cbc -d -in cipher_iv1.bin -out dec_iv1.txt -K 00112233445566778899AABBCCDDEEFF -iv 0102030405060708090A0B0C0D0E0F10
+cat dec_iv1.txt
+
+openssl enc -aes-128-cbc -d -in cipher_iv2.bin -out dec_iv2.txt -K 00112233445566778899AABBCCDDEEFF -iv 1112131415161718191A1B1C1D1E1F20
+cat dec_iv2.txt
+

@@ -1,0 +1,15 @@
+openssl genrsa -out key.pri 2048
+openssl rsa -in key.pri -out key.pub -pubout
+openssl rsa -in key.pri -noout -text
+cat key.pub
+
+echo "HELLO" > msg.txt
+openssl rsautl -encrypt -inkey key.pub -pubin -in msg.txt -out msg.enc
+openssl rsautl -decrypt -inkey key.pri -in msg.enc -out msg.dec
+cat msg.dec
+
+openssl rand -hex 32 > secret.key
+openssl rsautl -encrypt -inkey key.pub -pubin -in secret.key -out secret.key.enc
+openssl rsautl -decrypt -inkey key.pri -in secret.key.enc -out secret.key.dec
+cat secret.key
+cat secret.key.dec

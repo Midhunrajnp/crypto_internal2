@@ -1,0 +1,15 @@
+openssl version
+
+touch plain.txt
+gedit plain.txt
+cat plain.txt
+
+openssl enc -aes-128-cbc -e -in plain.txt -out cipher1.bin -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+openssl enc -aes-128-cbc -d -in cipher1.bin -out output1.txt -K 0123456789abcdeffedcba9876543210 -iv 00112233445566778899aabbccddeeff
+xxd cipher1.bin
+cat output1.txt
+
+openssl enc -aes-128-ecb -e -in plain.txt -out cipher2.bin -K 0123456789abcdeffedcba9876543210
+openssl enc -aes-128-ecb -d -in cipher2.bin -out output2.txt -K 0123456789abcdeffedcba9876543210
+xxd cipher2.bin
+cat output2.txt
